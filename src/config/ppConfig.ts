@@ -27,17 +27,8 @@ function(accessToken: string, refreshToken: string, profile: any, cb) {
       name: response.data.fantasy_content.users[0].user[1].profile.display_name,
       avatar: response.data.fantasy_content.users[0].user[1].profile.image_url 
     }
-    console.log('get user info from api: ', userInput);
-    User.findOne({
-      yahooId: userInput.yahooId
-    }, (err, user) => {
-      if (!user) {
-
-      } else {
-        console.log(`find user: ${user}`);
-        return cb(null, {...user, accessToken});
-      }
-    }).catch(err => {console.log('error in finding user in db: ', err);})
+    console.log('get user info back: ', userInput);
+    return cb(null, {...userInput, accessToken})
   }).catch(err => {
     console.log('error through authorization: ', err);
   })
