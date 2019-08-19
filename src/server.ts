@@ -40,16 +40,27 @@ app.use(passport.session());
 
 import authRouter from './routes/auth';
 import apiRouter from './routes/api';
+import { buildSchema } from 'graphql';
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
 
-// import schema from './graphql/schema';
-// import rootResolvers from './graphql/resolvers';
-// app.use('/graphql', graphqlHTTP({
-//   schema,
-//   rootValue: rootResolvers,
-//   graphiql: true
-// }))
+import schema from './graphql/schema';
+import root from './graphql/resolvers';
+// var schema = buildSchema(`
+//   type Query {
+//     hello: String
+//   }
+// `)
+
+// var root = {
+//   hello: () => ('Hello World!')
+// }
+
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true
+}))
 
 app.get('*', (req, res) => {
   // res.redirect('/');

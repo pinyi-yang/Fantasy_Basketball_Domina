@@ -9,12 +9,7 @@ export default buildSchema(`
     hello: String
   }
 
-  type RootMutation {
-
-  }
-
   schema {
     query: RootQuery
-    mutation: RootMutation
   }
 `)
