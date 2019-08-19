@@ -1,10 +1,10 @@
 {
-  "name": "oauth-react-boilerplate",
+  "name": "fantasy_basketball_domina",
   "version": "1.0.0",
   "description": "",
   "main": "build/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "nodemon build/server.js",
     "prestart": "tsc && cp -r views build/views && cd client && npm run build",
     "start": "node build/server.js"
   },

@@ -22,13 +22,22 @@ function(accessToken: string, refreshToken: string, profile: any, cb) {
   }
 
   axios.get('https://fantasysports.yahooapis.com/fantasy/v2/users;use_login=1/profile?format=json', config).then(response => {
-    let user = {
+    let userInput = {
       yahooId: response.data.fantasy_content.users[0].user[0].guid,
       name: response.data.fantasy_content.users[0].user[1].profile.display_name,
       avatar: response.data.fantasy_content.users[0].user[1].profile.image_url 
     }
-    console.log('get user info back: ', user);
-    return cb(null, {...user, accessToken})
+    console.log('get user info from api: ', userInput);
+    User.findOne({
+      yahooId: userInput.yahooId
+    }, (err, user) => {
+      if (!user) {
+
+      } else {
+        console.log(`find user: ${user}`);
+        return cb(null, {...user, accessToken});
+      }
+    }).catch(err => {console.log('error in finding user in db: ', err);})
   }).catch(err => {
     console.log('error through authorization: ', err);
   })

@@ -4,7 +4,7 @@ import Team from './team';
 
 const userSchema = new Schema({
   yahooId: {
-    type: Number,
+    type: String,
     required: [true, 'You need to have a yahoo id']
   },
   name: String,
@@ -18,10 +18,10 @@ userSchema.set('toObject', {
     let returnJson = {
       _id: ret._id,
       yahooId: ret.yahooId,
-      name: ret.name || 'user',
-      avatar: ret.avatar || '',
-      rivalries: ret.rivalries || [],
-      watchPlayers: ret.watchPlayers || []
+      name: ret.name,
+      avatar: ret.avatar,
+      rivalries: ret.rivalries,
+      watchPlayers: ret.watchPlayers
     }
     return returnJson;
   }
