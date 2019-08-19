@@ -5,6 +5,7 @@ import express from 'express';
 import axios from 'axios';
 import session from 'express-session';
 import mongoose from 'mongoose';
+import graphqlHTTP from 'express-graphql';
 import passport from './config/ppConfig';
 
 
@@ -15,7 +16,7 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 
 // The mongoose connection string needs to be typed as string
-mongoose.connect(process.env.MONGOOB_URI as string)
+mongoose.connect(process.env.MONGOOB_URI)
 const db = mongoose.connection;
 // COnnection types don't seem to support db.host and db.port
 db.once('open', () => {
@@ -41,6 +42,14 @@ import authRouter from './routes/auth';
 import apiRouter from './routes/api';
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
+
+// import schema from './graphql/schema';
+// import rootResolvers from './graphql/resolvers';
+// app.use('/graphql', graphqlHTTP({
+//   schema,
+//   rootValue: rootResolvers,
+//   graphiql: true
+// }))
 
 app.get('*', (req, res) => {
   // res.redirect('/');

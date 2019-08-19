@@ -1,30 +1,36 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import passport from 'passport';
-import passportGithub2 from 'passport-github2';
-const GithubStrategy = passportGithub2.Strategy;
+import passportOAuth2 from 'passport-oauth2';
+const OAuth2Strategy = passportOAuth2.Strategy;
 import User from '../models/user';
+import axios from 'axios';
 
-passport.use(new GithubStrategy({
-  clientID: process.env.GITHUB_CLIENT_ID,
-  clientSecret: process.env.GITHUB_SECRET_ID,
-  callbackURL: "http://localhost:3000/auth/github/callback"
-}, 
-function(accessToken, refreshToken, profile, cb) {
-  User.findOne({
-    githubId: profile.id
-  }, (err, user) => {
-    if (!user) {
-      //no user, create user and return the user info
-      User.create({
-        githubId: profile.id
-      }, (err, user) => {
-        return cb(null, {...user.toObject(), accessToken});
-      })
-    } else {
-      return cb(null, {...user.toObject(), accessToken});
+passport.use(new OAuth2Strategy({
+  clientID: process.env.YAHOO_CONSUMER_KEY,
+  clientSecret: process.env.YAHOO_CONSUMER_SECRET,
+  callbackURL: "/auth/yahoo/callback",
+  authorizationURL: 'https://api.login.yahoo.com/oauth2/request_auth',
+  tokenURL:'https://api.login.yahoo.com/oauth2/get_token'
+},
+function(accessToken: string, refreshToken: string, profile: any, cb) {
+  console.log('authorized by yahoo with: ', accessToken);
+  let config = {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
     }
+  }
 
+  axios.get('https://fantasysports.yahooapis.com/fantasy/v2/users;use_login=1/profile?format=json', config).then(response => {
+    let user = {
+      yahooId: response.data.fantasy_content.users[0].user[0].guid,
+      name: response.data.fantasy_content.users[0].user[1].profile.display_name,
+      avatar: response.data.fantasy_content.users[0].user[1].profile.image_url 
+    }
+    console.log('get user info back: ', user);
+    return cb(null, {...user, accessToken})
+  }).catch(err => {
+    console.log('error through authorization: ', err);
   })
 }))
 

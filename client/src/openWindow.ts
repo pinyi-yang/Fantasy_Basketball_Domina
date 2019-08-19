@@ -20,6 +20,7 @@ function opeNewAuthWindow(myUrl: string): Promise<IUser> {
 
       if (msg.data.payload) {
         try {
+          console.log('get user to React: ', JSON.parse(msg.data.payload));
           resolve(JSON.parse(msg.data.payload))
         }
         catch(err) {

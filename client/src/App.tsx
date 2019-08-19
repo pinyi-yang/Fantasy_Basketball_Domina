@@ -6,7 +6,9 @@ import openNewAuthWindow from './openWindow';
 //We had to define this because TS needs to know
 //the shape of our user object
 export interface IUser {
-  githubId: number;
+  yahooId: number;
+  name: string;
+  avatar: string;
   _id?: string;
 }
 
@@ -21,18 +23,18 @@ const App: React.FC = () => {
 
   useEffect(() => {
     console.log('firing data fetch');
-    if (Object.keys(user).length ) {
-      aixos.get(`/api/${user.githubId}/repos`).then(response => {
-        console.log('repos: ', response.data);
-        setRepos(response.data);
-      })
-    }
+    // if (Object.keys(user).length ) {
+    //   aixos.get(`/api/${user.yahooId}/repos`).then(response => {
+    //     console.log('repos: ', response.data);
+    //     setRepos(response.data);
+    //   })
+    // }
   }, [user])
 
   function handleLogin(e: React.MouseEvent): void {
     e.preventDefault();
     // specify the type of data returned
-    var message: Promise<IUser> = openNewAuthWindow('/auth/github');
+    var message: Promise<IUser> = openNewAuthWindow('/auth/yahoo');
     message.then(response => {
       setUser(response);
     }).catch(err => {
@@ -40,13 +42,17 @@ const App: React.FC = () => {
     })
   }
 
-  var userData = Object.keys(user).length === 0 ? <p>No user</p> : <p>{user.githubId}</p>
+  // function handleYhaoo(e: React.MouseEvent): void {
+  //   var message: Promise
+  // }
+
+  var userData = Object.keys(user).length === 0 ? <p>No user</p> : <p>{user.yahooId}</p>
   var repoData = repos.map((repo: IRepo, id) => (
     <p>{repo.name}</p>
   ))
   return (
     <div className="App">
-      <a onClick={handleLogin} href='/auth/github'>Login with Github</a>
+      <a onClick={handleLogin} href='/auth/yahoo'>Login with Yahoo!</a>
       {userData}
       {repoData}
     </div>
