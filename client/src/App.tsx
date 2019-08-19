@@ -3,24 +3,15 @@ import './App.css';
 import aixos from 'axios';
 import openNewAuthWindow from './openWindow';
 import axios from 'axios';
+import Home from './Home';
+import {IUser} from './interfaces';
 
 //We had to define this because TS needs to know
 //the shape of our user object
-export interface IUser {
-  yahooId: number;
-  name: string;
-  avatar: string;
-  _id?: string;
-}
-
-export interface IRepo {
-  name: string
-}
 
 const App: React.FC = () => {
   //useState can be used as generic, using IUser from above
   const [user, setUser] = useState<IUser>({} as IUser);
-  const [repos, setRepos] = useState<IRepo[]>([]);
 
   useEffect(() => {
     console.log('checking user in db');
@@ -126,18 +117,20 @@ const App: React.FC = () => {
   // function handleYhaoo(e: React.MouseEvent): void {
   //   var message: Promise
   // }
-
-  var userData = Object.keys(user).length === 0 ? <p>No user</p> : <p>{user.yahooId}</p>
-  var repoData = repos.map((repo: IRepo, id) => (
-    <p>{repo.name}</p>
-  ))
-  return (
-    <div className="App">
-      <a onClick={handleLogin} href='/auth/yahoo'>Login with Yahoo!</a>
-      {userData}
+  let content = (
+    <>
+    <a onClick={handleLogin} href='/auth/yahoo'>Login with Yahoo!</a>
       <button onClick={getUserGraphQL}>Get User with GraphQL</button>
       <button onClick={createUserGraphQL}>Create User with GraphQL</button>
-      {repoData}
+    </>  
+  )
+  if (Object.keys(user).includes('yahooId')) {
+    content = <Home user={user}/>
+  }
+
+  return (
+    <div className="App">
+      {content}
     </div>
   );
 }

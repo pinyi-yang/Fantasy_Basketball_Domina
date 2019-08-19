@@ -2,7 +2,7 @@
 // By https://gist.github.com/gauravtiwari
 // Also from this articles; https://medium.com/front-end-weekly/use-github-oauth-as-your-sso-seam
 
-import {IUser} from './App';
+import {IUser} from './interfaces';
 
 function opeNewAuthWindow(myUrl: string): Promise<IUser> {
   // Open the new window, if window can't open, return null
