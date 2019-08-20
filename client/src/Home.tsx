@@ -1,6 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 import {IUser} from './interfaces';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import LeagueInfo from './components/LeagueInfo';
+import Matchup from './components/Matchup';
+import Rivals from './components/Rivals';
+import Playground from './components/Playground';
 
 interface IProps {
   user: IUser
@@ -73,10 +84,27 @@ const Home: React.FC<IProps> = (props: IProps) => {
   }, [])
 
   return (
-    <>
-      {props.user.name}
-      {props.user.yahooId}
-    </>
+    <Router>
+      <Header />
+      <Sidebar />
+      <div className='body'>
+        <Route exact path='/' render={() => (
+          <LeagueInfo />
+        )} />
+        <Route exact path='/matchup' render={() => (
+          <Matchup />
+        )} />
+        <Route exact path='/rivals' render={() => (
+          <Rivals />
+        )} />
+        <Route excat path='/playground' render={() => (
+          <Playground />
+        )} />
+
+        {props.user.name}
+        {props.user.yahooId}
+      </div>
+    </Router>
   )
 }
 
