@@ -9,8 +9,17 @@ export interface IUser {
 }
 
 export interface ITeam {
-  key: string;
   _id?: string;
+  owner_yahooId?: string;
+  key: string;
+  name?: string;
+  logo?: string;
+  rank?: number;
+  wins?: string;
+  losses?: string;
+  ties?: string;
+  percentage?: string;
+  score?: number;
 }
 
 export interface IPlayer {
