@@ -15,8 +15,17 @@ export default buildSchema(`
   }
 
   type Team {
-    _id: ID
+    _id: String
+    owner_yahooId: String
     key: String!
+    name: String
+    logo: String
+    rank: Int
+    wins: String
+    losses: String
+    ties: String
+    percentage: String
+    score: Int
   }
 
   type User {
@@ -36,7 +45,17 @@ export default buildSchema(`
     week: String
     season: String
   }
-  
+
+  type Matchup {
+    teams: [Team]
+  }
+
+  type LeagueInfo {
+    standings: [Team]
+    scoreboard: [Matchup]
+  }
+
+
   input UserInput {
     yahooId: String!
     name: String
@@ -47,6 +66,7 @@ export default buildSchema(`
     hello: String
     user(name: String): User
     leagues(token: String): [League]
+    leagueInfo(token: String, leagueKey: String, week: String): LeagueInfo
   }
 
 

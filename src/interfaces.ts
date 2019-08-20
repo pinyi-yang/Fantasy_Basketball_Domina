@@ -22,6 +22,10 @@ export interface ITeam {
   score?: number;
 }
 
+export interface IMatchup {
+  teams: ITeam[]
+}
+
 export interface IPlayer {
   key: string;
   firstName: string;
@@ -38,4 +42,9 @@ export interface ILeague {
   totalWeeks: string;
   week: string;
   season: string;
+}
+
+export interface ILeagueInfo {
+  standings: ITeam[],
+  scoreboard: IMatchup[]
 }

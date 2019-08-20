@@ -23,7 +23,19 @@ const Home: React.FC<IProps> = (props: IProps) => {
   const [user, setUser] = useState<IUser>({} as IUser);
   const [leagues, setLeauges] = useState<ILeague[]>([] as ILeague[]);
   const [leagueIndex, setLeagueIndex] = useState(0);
-
+  const statName = {
+    5: "FG%",
+    8: "FT%",
+    10: "3PTM",
+    12: "PTS",
+    15: "REB",
+    16: "AST",
+    17: "ST",
+    18: "BLK",
+    19: "TO",
+    9004003: "FGM/A",
+    9007006: "FTM/A"
+  }
   useEffect(() => {
     //* get or create user in DB, passed
     let userInput = {
