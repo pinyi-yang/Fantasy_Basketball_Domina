@@ -4,7 +4,7 @@ export interface IUser {
   avatar: string;
   _id?: string;
   rivalries?: ITeam[];
-  wathPlayers?: IPlayer[];
+  watchPlayers?: IPlayer[];
   accessToken?: string;
 }
 

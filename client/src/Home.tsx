@@ -13,7 +13,7 @@ import Matchup from './components/Matchup';
 import Rivals from './components/Rivals';
 import Playground from './components/Playground';
 
-import {ILeague} from './interfaces';
+import {ILeague, IMatchup, ITeam} from './interfaces';
 
 interface IProps {
   user: IUser
@@ -24,6 +24,9 @@ const Home: React.FC<IProps> = (props: IProps) => {
   const [leagues, setLeauges] = useState<ILeague[]>([] as ILeague[]);
   const [leagueIndex, setLeagueIndex] = useState(0);
   const [week, setWeek] = useState('');
+  const [scoreboard, setScoreboard] = useState<IMatchup[]>([] as IMatchup[]);
+  const [standings, setStandings] = useState<ITeam[]>([] as ITeam[]);
+  const [myTeam, setMyTeam] =useState<ITeam>({} as ITeam)
   const statName = {
     5: "FG%",
     8: "FT%",
@@ -52,6 +55,18 @@ const Home: React.FC<IProps> = (props: IProps) => {
           name
           yahooId
           avatar
+          rivalries{
+            key
+            name
+            logo
+          }
+          watchPlayers {
+            key
+            firstName
+            lastName
+            positions
+            headshot
+          }
         }
       }`,
       variables: {
@@ -119,6 +134,7 @@ const Home: React.FC<IProps> = (props: IProps) => {
               }
             }
             standings {
+              owner_yahooId
               name
               logo
               rank
@@ -142,9 +158,17 @@ const Home: React.FC<IProps> = (props: IProps) => {
       console.log('ready to current leagueInfo from graphql');
       axios.post('/graphql', body, options).then(response => {
         console.log('get current leagueInfo from api', response.data.data.leagueInfo);
+        setScoreboard(response.data.data.leagueInfo.scoreboard);
+        setStandings(response.data.data.leagueInfo.standings);
+        response.data.data.leagueInfo.standings.forEach((team: ITeam) => {
+          if (team.owner_yahooId === props.user.yahooId) {
+            setMyTeam(team);
+            console.log(`user's teams is: `, team);
+          }
+        })
       }).catch(err => {console.log('error: api getting leagueInfo: ', err);})
     }
-  }, [week])
+  }, [week, leagueIndex])
 
   let currentLeague = leagues.length? leagues[leagueIndex] : null;
 
@@ -160,8 +184,10 @@ const Home: React.FC<IProps> = (props: IProps) => {
 
         <div className="content">
           <Route exact path='/' render={() => (
-            <LeagueInfo leagues={leagues} 
-                        index={leagueIndex}/>
+            <LeagueInfo myTeam={myTeam} 
+                        scoreboard={scoreboard}
+                        standings={standings}
+                        />
           )} />
           <Route exact path='/matchup' render={() => (
             <Matchup />
@@ -172,9 +198,6 @@ const Home: React.FC<IProps> = (props: IProps) => {
           <Route excat path='/playground' render={() => (
             <Playground />
           )} />
-  
-          {props.user.name}
-          {props.user.yahooId}
         </div>
       </div>
     </Router>
