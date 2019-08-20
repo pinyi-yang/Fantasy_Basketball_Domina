@@ -122,6 +122,7 @@ const App: React.FC = () => {
     <a onClick={handleLogin} href='/auth/yahoo'>Login with Yahoo!</a>
       <button onClick={getUserGraphQL}>Get User with GraphQL</button>
       <button onClick={createUserGraphQL}>Create User with GraphQL</button>
+      <img src="./img/Fantasy_ICON.png" alt=""/>
     </>  
   )
   if (Object.keys(user).includes('yahooId')) {

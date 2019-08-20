@@ -19,7 +19,7 @@ const getLeagues = ({token}: {token: string}): Promise<ILeague[] | void> => {
             let league = {
                 key: leagues1[key].league[0].league_key,
                 name: leagues1[key].league[0].name,
-                logo: leagues1[key].league[0].logo_url || "../public/img/Fantasy_ICON.png",
+                logo: leagues1[key].league[0].logo_url || "./img/Fantasy_ICON.png",
                 totalWeeks: leagues1[key].league[0].end_week,
                 week: leagues1[key].league[0].current_week,
                 season: leagues1[key].league[0].season
@@ -33,7 +33,7 @@ const getLeagues = ({token}: {token: string}): Promise<ILeague[] | void> => {
             let league = {
                 key: leagues2[key].league[0].league_key,
                 name: leagues2[key].league[0].name,
-                logo: leagues2[key].league[0].logo_url || "../public/img/Fantasy_ICON.png",
+                logo: leagues2[key].league[0].logo_url || "./img/Fantasy_ICON.png",
                 totalWeeks: leagues2[key].league[0].end_week,
                 week: leagues2[key].league[0].current_week,
                 season: leagues2[key].league[0].season
