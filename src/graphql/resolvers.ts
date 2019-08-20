@@ -1,6 +1,6 @@
 import {IUser} from '../interfaces';
 import User from '../models/user';
-
+import leagueResolvers from './resolvers/leagueResolvers';
 
 
 const createUser = async ({userInput}: {userInput: IUser}) => {
@@ -56,7 +56,8 @@ const getUser = async ({name}: {name: string}) => {
 const rootResolvers = {
   hello: () => ('Hello World!'),
   createUser: createUser,
-  user: getUser
+  user: getUser,
+  ...leagueResolvers
 }
 
 export default rootResolvers;

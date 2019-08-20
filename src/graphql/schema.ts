@@ -36,17 +36,19 @@ export default buildSchema(`
     week: String
     season: String
   }
-
-  type RootQuery {
-    hello: String
-    user(name: String): User
-  }
-
+  
   input UserInput {
     yahooId: String!
     name: String
     avatar: String
   }
+  
+  type RootQuery {
+    hello: String
+    user(name: String): User
+    leagues(token: String): [League]
+  }
+
 
   type RootMutation {
     createUser(userInput: UserInput): User
