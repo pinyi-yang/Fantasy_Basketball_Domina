@@ -23,6 +23,7 @@ const Home: React.FC<IProps> = (props: IProps) => {
   const [user, setUser] = useState<IUser>({} as IUser);
   const [leagues, setLeauges] = useState<ILeague[]>([] as ILeague[]);
   const [leagueIndex, setLeagueIndex] = useState(0);
+  const [week, setWeek] = useState('');
   const statName = {
     5: "FG%",
     8: "FT%",
@@ -99,8 +100,51 @@ const Home: React.FC<IProps> = (props: IProps) => {
       console.log('get user leagues from api', response.data.data.leagues);
       setLeauges(response.data.data.leagues);
       setLeagueIndex(0);
+      setWeek(response.data.data.leagues[0].week)
     }).catch(err => {console.log('error: api getting leagues: ', err);})
   }, [])
+
+  useEffect(() => {
+    //*Queries:
+    // 1. get current league standing and scoreboard
+    if (week) {
+      let body = {
+        query: `query leagueInfo($token: String, $leagueKey: String, $week: String) {
+          leagueInfo(token: $token, leagueKey: $leagueKey, week: $week) {
+            scoreboard {
+              teams {
+                name
+                logo
+                score
+              }
+            }
+            standings {
+              name
+              logo
+              rank
+              wins
+              ties
+              losses
+            }
+          }
+        }`,
+        variables: {
+          token: props.user.accessToken,
+          leagueKey: leagues[leagueIndex].key,
+          week
+        }
+      }
+      let options = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      console.log('ready to current leagueInfo from graphql');
+      axios.post('/graphql', body, options).then(response => {
+        console.log('get current leagueInfo from api', response.data.data.leagueInfo);
+      }).catch(err => {console.log('error: api getting leagueInfo: ', err);})
+    }
+  }, [week])
 
   let currentLeague = leagues.length? leagues[leagueIndex] : null;
 
