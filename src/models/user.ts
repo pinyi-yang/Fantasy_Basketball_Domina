@@ -20,8 +20,8 @@ userSchema.set('toObject', {
       yahooId: ret.yahooId,
       name: ret.name,
       avatar: ret.avatar,
-      rivalries: ret.rivalries,
-      watchPlayers: ret.watchPlayers
+      rivalries: ret.rivalries || [],
+      watchPlayers: ret.watchPlayers || []
     }
     return returnJson;
   }

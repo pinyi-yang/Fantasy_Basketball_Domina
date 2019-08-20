@@ -13,8 +13,8 @@ const App: React.FC = () => {
   //useState can be used as generic, using IUser from above
   const [user, setUser] = useState<IUser>({} as IUser);
 
-  useEffect(() => {
-    console.log('checking user in db');
+  // useEffect(() => {
+    // console.log('checking user in db');
     // if (Object.keys(user).length && !Object.keys(user).includes('_id')) {
     //   let body = {
     //     query: `mutation createUser($user: UserInput) {
@@ -43,7 +43,7 @@ const App: React.FC = () => {
     //     console.log('checking user with db, return', response.data.data.user);
     //   }).catch(err => {console.log('error: checking database: ', err);})
     // }
-  }, [user])
+  // }, [user])
 
   function handleLogin(e: React.MouseEvent): void {
     e.preventDefault();

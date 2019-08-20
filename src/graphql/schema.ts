@@ -28,6 +28,15 @@ export default buildSchema(`
     watchPlayers: [Player]
   }
 
+  type League {
+    key: String
+    name: String
+    logo: String
+    totalWeeks: String
+    week: String
+    season: String
+  }
+
   type RootQuery {
     hello: String
     user(name: String): User

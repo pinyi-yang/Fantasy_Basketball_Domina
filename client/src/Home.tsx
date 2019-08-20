@@ -22,8 +22,6 @@ const Home: React.FC<IProps> = (props: IProps) => {
           _id
           name
           yahooId
-          rivalries
-          watchPlayers
         }
       }`,
       variables: {
