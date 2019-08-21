@@ -135,6 +135,7 @@ const Home: React.FC<IProps> = (props: IProps) => {
             }
             standings {
               owner_yahooId
+              key
               name
               logo
               rank

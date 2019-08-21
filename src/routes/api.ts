@@ -27,44 +27,36 @@ router.post('/rivals', (req, res) => {
     key: req.body.key, 
     logo: req.body.logo
   }
-  console.log('prepare to create team: ', inputTeam);
-  Team.create(inputTeam, function(err, team: DBITeam) {
-    if (err) console.log('error: create team: ', err);
-    User.findOne({yahooId: req.user.yahooId}, function(err, user: DBIUser) {
-      if (err) console.log('error: find user: ', err);
-      console.log('find user: ', user);
-      user.rivalries.push(team)
-      user.save(function(err, user:DBIUser) {
-        console.log('add rival to user: ', user.toObject());
-        res.json(team.toObject())
-      })
-    })
-  }) 
-  
-  // Team.find({
-  //   owner_yahooId: inputTeam.owner_yahooId
-  // }, function(err, team: DBITeam) {
-  //   if (err) res.json(err)
-  //   if (!team) {
-  //     console.log('team is not find in db');
-  //     Team.create({...inputTeam}, function(err, team: DBITeam) {
-  //       if (err) console.log('error in creating team: ', err);
-  //       console.log('create team: ', team);
-  //       User.findOne({yahooId: req.user.yahooId}, function(err, user: DBIUser) {
-  //         user.rivalries.push(team);
-  //         user.save();
-  //         res.json(team)
-  //       })
-  //     })
-  //   } else {
-  //     console.log('find team in db: ', team);
-  //     User.findOne({yahooId: req.user.yahooId}, function(err, user: DBIUser) {
-  //       user.rivalries.push(team);
-  //       user.save();
-  //       res.json(team)
-  //     })
-  //   }
-  // })
+  Team.findOne({owner_yahooId: inputTeam.owner_yahooId}, function(err, team) {
+    
+    if (!team) {
+      console.log('prepare to create team: ========================== \n', inputTeam);
+      Team.create(inputTeam, function(err, team: DBITeam) {
+        if (err) console.log('error: create team: ', err);
+        User.findOne({yahooId: req.user.yahooId})
+          .populate("rivalries")
+          .exec((err, user: DBIUser) => {
+            if (err) console.log('error: find user: ==================\n ', err);
+            console.log('find user: ================= \n', user);
+            user.rivalries.push(team)
+            user.save(function(err, user:DBIUser) {
+              console.log('add rival to user: ==================== \n ', user.toObject());
+              res.json(user.toObject())
+            })
+        })
+      }) 
+    } else {
+      console.log('find team in db: ============================ \n', team);
+      User.findOne({yahooId: req.user.yahooId})
+        .populate('rivalries')
+        .exec((err, user: DBIUser) => {
+          user.rivalries.push(team.toObject())
+          user.save((err, user) => {
+            res.json(user.toObject())
+          })
+        })
+    }
+  })
 })
 
 // DELETE /api/rivals/:key - return new rivals
@@ -73,7 +65,13 @@ router.delete('/rivals/:key', (req, res) => {
     key: req.params.key
   }, (err, team) => {
     User.update({yahooId: req.user.yahooId}, {$pull: {rivalries: team._id}}, function(err, response) {
-      res.json(response)
+      console.log('deleted rival from team ======================');
+      User.findOne({yahooId: req.user.yahooId})
+        .populate('rivalries')
+        .exec((err, user) => {
+          console.log('after delete, user is:================== \n', user);
+          res.json(user.toObject())
+        })
     })
   })
 })

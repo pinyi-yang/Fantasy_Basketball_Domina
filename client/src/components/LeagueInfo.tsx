@@ -24,12 +24,14 @@ const LeagueInfo: React.FC<IProps> = (props: IProps) => {
       // remove team from user rivalries
       axios.delete(`/api/rivals/${key}`).then(response => {
         console.log('removed rival, and new rivals are: ', response.data);
+        props.setRivals(response.data.rivalries);
       })
     } else {
       // add team to user rivalries
       console.log('add team to user rivals with', owner_yahooId, name, key, logo);
       axios.post(`/api/rivals`, {owner_yahooId, name, key, logo}).then(response => {
-        console.log('get rivals back: ', response.data);
+        console.log('get new rivals back: ', response.data);
+        props.setRivals(response.data.rivalries)
       })
     }
   }
