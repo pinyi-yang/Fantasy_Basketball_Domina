@@ -202,8 +202,11 @@ const Home: React.FC<IProps> = (props: IProps) => {
   let rivalsKeys: string[] = rivals.map(rival => (
     rival.key
   ))
+  let hasMatchup = Object.keys(teams).includes(myTeam.key);
+  let myMatchup: IMatchup | null = null;
+  // scoreboard.forEach(matchup => {
   
-
+  // })
   return (
     <Router>
       <Header league={currentLeague}/>

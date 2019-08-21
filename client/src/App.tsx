@@ -118,12 +118,13 @@ const App: React.FC = () => {
   //   var message: Promise
   // }
   let content = (
-    <>
-    <a onClick={handleLogin} href='/auth/yahoo'>Login with Yahoo!</a>
-      <button onClick={getUserGraphQL}>Get User with GraphQL</button>
-      <button onClick={createUserGraphQL}>Create User with GraphQL</button>
-      <img src="./img/Fantasy_ICON.png" alt=""/>
-    </>  
+    <div id='login-div'>
+      <img src="./img/Fantasy_ICON.png" alt="" id='login-icon'/>
+      <h1 id='login-title'>Fantasy Basketball Domina</h1>
+      <button id='login-btn'>
+        <a onClick={handleLogin} href='/auth/yahoo' id='login-link'>Login with Your Yahoo!</a>
+      </button>
+    </div>  
   )
   if (Object.keys(user).includes('yahooId')) {
     content = <Home user={user}/>

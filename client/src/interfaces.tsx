@@ -40,7 +40,7 @@ export interface ITeamScore extends ITeam {
 }
 
 export interface IMatchup {
-  teams: ITeam[]
+  teams: ITeamScore[]
 }
 
 export interface IPlayer {

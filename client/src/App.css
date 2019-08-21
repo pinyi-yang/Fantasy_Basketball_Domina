@@ -1,6 +1,12 @@
 .App {
   text-align: center;
   background: beige;
+  min-height: 100vh;
+}
+
+.body {
+  min-height: 100vh;
+  background: beige;
 }
 
 .content {
@@ -26,6 +32,41 @@ img {
   /* border: 0.1px solid black; */
   box-sizing: border-box;
 }
+
+/* ================ login ============= */
+#login-icon {
+  margin-top: 10vh;
+}
+
+#login-div {
+  min-height: 100vh;
+  background: url('/img/login_background.jpg');
+  background-position: center;
+  background-attachment: fixed;
+  background-size:cover;
+}
+
+#login-title {
+  margin: 5vh;
+  font-family: sans-serif;
+  font-size: 45px;
+}
+
+#login-btn {
+  width: 275px;
+  height: 70px;
+  background: rebeccapurple;
+  border-radius: 35px;
+  border: 3px solid white;
+}
+
+#login-link {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+}
+
 /* ====== header ============== */
 header {
   height: 150px;
@@ -51,6 +92,7 @@ aside a {
   color: white;
   text-decoration: none;
   font-size: 1.4em;
+  padding: 1em;
 }
 
 .side-league-logo {
