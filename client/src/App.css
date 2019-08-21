@@ -72,6 +72,10 @@ aside Link {
   border: 3px solid grey;
 }
 
+.weekselector-div {
+  text-align:left;
+}
+
 .small-logo {
   height: 40px;
   margin-right: 15px;
@@ -91,4 +95,27 @@ aside Link {
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+/* ====================== rivals ============== */
+.rival-matchup-title {
+  text-align: left;
+}
+
+.rival-matchup-name {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.rival-matchup-team, .rival-matchup-header {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+}
+
+.rival-matchup-team div, .rival-matchup-header div {
+  border: 0.5px solid;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }

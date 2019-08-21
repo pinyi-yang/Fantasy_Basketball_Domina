@@ -19,6 +19,10 @@ interface IProps {
   user: IUser
 }
 
+interface ITeams {
+  [key:string]: ITeamScore
+}
+
 const Home: React.FC<IProps> = (props: IProps) => {
   const [user, setUser] = useState<IUser>({} as IUser);
   const [leagues, setLeauges] = useState<ILeague[]>([] as ILeague[]);
@@ -29,7 +33,7 @@ const Home: React.FC<IProps> = (props: IProps) => {
   const [myTeam, setMyTeam] = useState<ITeam>({} as ITeam);
   const [rivals, setRivals] = useState<ITeam[]>([] as ITeam[]);
   const [watchPlayers, setWatchPlayers] = useState<IPlayer[]>([] as IPlayer[]);
-  const [teams, setTeams] = useState<{[key:string]: ITeamScore}>({} as {[key:string]: ITeamScore});
+  const [teams, setTeams] = useState<ITeams>({} as ITeams);
   // const statName = {
   //   5: "FG%",
   //   8: "FT%",
@@ -137,7 +141,7 @@ const Home: React.FC<IProps> = (props: IProps) => {
       axios.get(`/api/leagues/${leagues[leagueIndex].key}/scoreboard?week=${week}`).then(response => {
         console.log('get scoreboard back: ', response.data);
         setScoreboard(response.data);
-        let results: {[key:string]: ITeamScore} = {}
+        let results: ITeams = {}
         response.data.forEach( (matchup: {teams: ITeamScore[]}) => {
           results[matchup.teams[0].key] = matchup.teams[0];
           results[matchup.teams[1].key] = matchup.teams[1];
@@ -195,6 +199,10 @@ const Home: React.FC<IProps> = (props: IProps) => {
   }, [week, leagueIndex])
 
   let currentLeague = leagues.length? leagues[leagueIndex] : null;
+  let rivalsKeys: string[] = rivals.map(rival => (
+    rival.key
+  ))
+  
 
   return (
     <Router>
@@ -221,7 +229,12 @@ const Home: React.FC<IProps> = (props: IProps) => {
             <Matchup />
           )} />
           <Route exact path='/rivals' render={() => (
-            <Rivals />
+            <Rivals myTeam={myTeam}
+                    teams={teams}
+                    rivalsKeys={rivalsKeys}
+                    week={week}
+                    setWeek={setWeek}
+                    />
           )} />
           <Route excat path='/playground' render={() => (
             <Playground />

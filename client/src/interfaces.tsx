@@ -22,22 +22,21 @@ export interface ITeam {
   score?: number;
 }
 
-export interface IStat {
-  "FG%": string;
-  "FT%": string;
-  "3PTM": string;
-  "PTS": string;
-  "REB": string;
-  "AST": string;
-  "ST": string;
-  "BLK": string;
-  "TO": string;
-  "FGM/A": string;
-  "FTM/A": string;
-}
-
 export interface ITeamScore extends ITeam {
-  stat: IStat
+  stat: {
+    [key: string]: string;
+    "FG%": string;
+    "FT%": string;
+    "3PTM": string;
+    "PTS": string;
+    "REB": string;
+    "AST": string;
+    "ST": string;
+    "BLK": string;
+    "TO": string;
+    "FGM/A": string;
+    "FTM/A": string;
+  }
 }
 
 export interface IMatchup {

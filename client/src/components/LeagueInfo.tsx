@@ -95,9 +95,11 @@ const LeagueInfo: React.FC<IProps> = (props: IProps) => {
     <div className='league-info'>
       <div className='league-info-sub'>
         <div className="team-info">
-          <select value={props.week} onChange={(e) => props.setWeek(e.target.value)}>
-            {weekSelector}
-          </select>
+          <div className="weekselector-div">
+            <select value={props.week} onChange={(e) => props.setWeek(e.target.value)}>
+              {weekSelector}
+            </select>
+          </div>
           {teamInfo}
         </div>
 
