@@ -120,6 +120,7 @@ app.get('/scoreboard', (req, res) => {
   }
   axios.get('https://fantasysports.yahooapis.com/fantasy/v2/leagues;league_keys=385.l.24889/scoreboard?format=json', config).then(response => {
     let matchups = response.data.fantasy_content.leagues[0].league[1].scoreboard[0].matchups;
+    res.json(matchups)
     let results = [];
     for (let key in matchups) {
       if (key !== 'count') {
@@ -127,14 +128,40 @@ app.get('/scoreboard', (req, res) => {
           key: matchups[key].matchup[0].teams[0].team[0][0].team_key,
           name: matchups[key].matchup[0].teams[0].team[0][2].name,
           logo: matchups[key].matchup[0].teams[0].team[0][5].team_logos[0].team_logo.url,
-          score: 0
-        }
+          score: 0,
+          stat: {
+            "FG%": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[1].stat.value,
+            "FT%": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[3].stat.value,
+            "3PTM": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[4].stat.value,
+            "PTS": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[5].stat.value,
+            "REB": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[6].stat.value,
+            "AST": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[7].stat.value,
+            "ST": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[8].stat.value,
+            "BLK": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[9].stat.value,
+            "TO": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[10].stat.value,
+            "FGM/A": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[0].stat.value,
+            "FTM/A": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[2].stat.value
+          }
+        };
         let team1 = {
           key: matchups[key].matchup[0].teams[1].team[0][0].team_key,
           name: matchups[key].matchup[0].teams[1].team[0][2].name,
           logo: matchups[key].matchup[0].teams[1].team[0][5].team_logos[0].team_logo.url,
-          score: 0
-        }
+          score: 0,
+          stat: {
+            "FG%": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[1].stat.value,
+            "FT%": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[3].stat.value,
+            "3PTM": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[4].stat.value,
+            "PTS": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[5].stat.value,
+            "REB": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[6].stat.value,
+            "AST": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[7].stat.value,
+            "ST": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[8].stat.value,
+            "BLK": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[9].stat.value,
+            "TO": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[10].stat.value,
+            "FGM/A": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[0].stat.value,
+            "FTM/A": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[2].stat.value
+          }
+        };
         
         matchups[key].matchup.stat_winners.forEach(stat => {
           if (stat.stat_winner.winner_team_key === team0.key) {

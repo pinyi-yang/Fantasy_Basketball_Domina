@@ -90,5 +90,111 @@ router.get('/players', (req, res) => {
   })
 })
 
+router.get('/leagues/:key/standings', (req, res) => {
+  let config = {
+    headers: {
+      'Authorization': `Bearer ${req.user.accessToken}`
+    }
+  }
+  console.log(`get standings for leagues ${req.params.key}`);
+  axios.get(`https://fantasysports.yahooapis.com/fantasy/v2/leagues;league_keys=${req.params.key}/standings?format=json`, config).then(response => {
+    let teams = response.data.fantasy_content.leagues[0].league[1].standings[0].teams;
+    let standings = []
+    for (let key in teams) {
+      if (key !== 'count') {
+        let team = {
+          owner_yahooId: teams[key].team[0][19].managers[0].manager.guid, 
+          key: teams[key].team[0][0].team_key,
+          name: teams[key].team[0][2].name,
+          logo: teams[key].team[0][5].team_logos[0].team_logo.url,
+          rank: teams[key].team[2].team_standings.rank,
+          wins: teams[key].team[2].team_standings.outcome_totals.wins,
+          losses: teams[key].team[2].team_standings.outcome_totals.losses,
+          ties: teams[key].team[2].team_standings.outcome_totals.ties,
+          percentage: teams[key].team[2].team_standings.outcome_totals.percentage
+        }
+        standings.push(team);
+      }
+    }
+    console.log('get leagues standing ============================ \n', standings);
+    res.json(standings);
+  }).catch(err => console.log('error: getting league standings: =====================\n', err))
+})
+
+// GET /api/leagues/:key/scoreboard?week=
+router.get('/leagues/:key/scoreboard', (req, res) => {
+  let config = {
+    headers: {
+      'Authorization': `Bearer ${req.user.accessToken}`
+    }
+  }
+  console.log(`get scoreboard for leagues ${req.params.key} at week ${req.query.week}`);
+  axios.get(`https://fantasysports.yahooapis.com/fantasy/v2/leagues;league_keys=${req.params.key}/scoreboard;week=${req.query.week}?format=json`, config).then(response => {
+    let matchups = response.data.fantasy_content.leagues[0].league[1].scoreboard[0].matchups;
+    let results = [];
+    for (let key in matchups) {
+      if (key !== 'count') {
+        let team0 = {
+          owner_yahooId: matchups[key].matchup[0].teams[0].team[0][19].managers[0].manager.guid,
+          key: matchups[key].matchup[0].teams[0].team[0][0].team_key,
+          name: matchups[key].matchup[0].teams[0].team[0][2].name,
+          logo: matchups[key].matchup[0].teams[0].team[0][5].team_logos[0].team_logo.url,
+          score: 0,
+          stat: {
+            "FG%": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[1].stat.value,
+            "FT%": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[3].stat.value,
+            "3PTM": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[4].stat.value,
+            "PTS": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[5].stat.value,
+            "REB": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[6].stat.value,
+            "AST": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[7].stat.value,
+            "ST": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[8].stat.value,
+            "BLK": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[9].stat.value,
+            "TO": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[10].stat.value,
+            "FGM/A": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[0].stat.value,
+            "FTM/A": matchups[key].matchup[0].teams[0].team[1].team_stats.stats[2].stat.value
+          }
+        };
+        let team1 = {
+          owner_yahooId: matchups[key].matchup[0].teams[1].team[0][19].managers[0].manager.guid,
+          key: matchups[key].matchup[0].teams[1].team[0][0].team_key,
+          name: matchups[key].matchup[0].teams[1].team[0][2].name,
+          logo: matchups[key].matchup[0].teams[1].team[0][5].team_logos[0].team_logo.url,
+          score: 0,
+          stat: {
+            "FG%": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[1].stat.value,
+            "FT%": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[3].stat.value,
+            "3PTM": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[4].stat.value,
+            "PTS": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[5].stat.value,
+            "REB": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[6].stat.value,
+            "AST": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[7].stat.value,
+            "ST": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[8].stat.value,
+            "BLK": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[9].stat.value,
+            "TO": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[10].stat.value,
+            "FGM/A": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[0].stat.value,
+            "FTM/A": matchups[key].matchup[0].teams[1].team[1].team_stats.stats[2].stat.value
+          }
+        };
+        
+        matchups[key].matchup.stat_winners.forEach(stat => {
+          if (stat.stat_winner.winner_team_key === team0.key) {
+            team0.score++
+          }
+
+          if (stat.stat_winner.winner_team_key === team1.key) {
+            team1.score++
+          }
+        })
+        
+        let matchup = {
+          teams: [team0, team1]
+        }
+        results.push(matchup)
+      }
+
+    }    
+  
+  res.json(results);
+  })
+})
 
 export default router;

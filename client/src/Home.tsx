@@ -121,53 +121,69 @@ const Home: React.FC<IProps> = (props: IProps) => {
     //*Queries:
     // 1. get current league standing and scoreboard
     if (week) {
-      let body = {
-        query: `query leagueInfo($token: String, $leagueKey: String, $week: String) {
-          leagueInfo(token: $token, leagueKey: $leagueKey, week: $week) {
-            scoreboard {
-              teams {
-                name
-                owner_yahooId
-                key
-                logo
-                score
-              }
-            }
-            standings {
-              owner_yahooId
-              key
-              name
-              logo
-              rank
-              wins
-              ties
-              losses
-            }
-          }
-        }`,
-        variables: {
-          token: props.user.accessToken,
-          leagueKey: leagues[leagueIndex].key,
-          week
-        }
-      }
-      let options = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-      console.log('ready to current leagueInfo from graphql');
-      axios.post('/graphql', body, options).then(response => {
-        console.log('get current leagueInfo from api', response.data.data.leagueInfo);
-        setScoreboard(response.data.data.leagueInfo.scoreboard);
-        setStandings(response.data.data.leagueInfo.standings);
-        response.data.data.leagueInfo.standings.forEach((team: ITeam) => {
+      console.log(`get standings and scoreboard for ${leagues[leagueIndex].key} at ${week}`);
+      axios.get(`/api/leagues/${leagues[leagueIndex].key}/standings`).then(response => {
+        console.log('get standing back: ', response.data);
+        setStandings(response.data);
+        response.data.forEach((team: ITeam) => {
           if (team.owner_yahooId === props.user.yahooId) {
             setMyTeam(team);
             console.log(`user's teams is: `, team);
           }
         })
-      }).catch(err => {console.log('error: api getting leagueInfo: ', err);})
+      })
+
+      axios.get(`/api/leagues/${leagues[leagueIndex].key}/scoreboard?week=${week}`).then(response => {
+        console.log('get scoreboard back: ', response.data);
+        setScoreboard(response.data)
+      })
+      // let body = {
+      //   query: `query leagueInfo($token: String, $leagueKey: String, $week: String) {
+      //     leagueInfo(token: $token, leagueKey: $leagueKey, week: $week) {
+      //       scoreboard {
+      //         teams {
+      //           name
+      //           owner_yahooId
+      //           key
+      //           logo
+      //           score
+      //         }
+      //       }
+      //       standings {
+      //         owner_yahooId
+      //         key
+      //         name
+      //         logo
+      //         rank
+      //         wins
+      //         ties
+      //         losses
+      //       }
+      //     }
+      //   }`,
+      //   variables: {
+      //     token: props.user.accessToken,
+      //     leagueKey: leagues[leagueIndex].key,
+      //     week
+      //   }
+      // }
+      // let options = {
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // }
+      // console.log('ready to current leagueInfo from graphql');
+      // axios.post('/graphql', body, options).then(response => {
+      //   console.log('get current leagueInfo from api', response.data.data.leagueInfo);
+      //   setScoreboard(response.data.data.leagueInfo.scoreboard);
+      //   setStandings(response.data.data.leagueInfo.standings);
+      //   response.data.data.leagueInfo.standings.forEach((team: ITeam) => {
+      //     if (team.owner_yahooId === props.user.yahooId) {
+      //       setMyTeam(team);
+      //       console.log(`user's teams is: `, team);
+      //     }
+      //   })
+      // }).catch(err => {console.log('error: api getting leagueInfo: ', err);})
     }
   }, [week, leagueIndex])
 
