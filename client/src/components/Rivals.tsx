@@ -51,8 +51,14 @@ const Rivals: React.FC<IProps> = (props: IProps) => {
                   {props.teams[key].stat[item]}
                 </div>
               )
-              if (item = "TO") {
-                props.teams[key].stat[item] > props.teams[myKey].stat[item] ? rivalScore++ :
+              if (item === "TO") {
+                if (props.teams[key].stat[item] !== props.teams[myKey].stat[item]) {
+                  props.teams[key].stat[item] < props.teams[myKey].stat[item] ? rivalScore++ : myScore++;
+                }
+              } else if (!item.includes('/')) {
+                if (props.teams[key].stat[item] !== props.teams[myKey].stat[item]) {
+                  props.teams[key].stat[item] > props.teams[myKey].stat[item] ? rivalScore++ : myScore++
+                }
               }
             }
 
@@ -67,6 +73,7 @@ const Rivals: React.FC<IProps> = (props: IProps) => {
                     <h4>{props.teams[key].name}</h4>
                   </div>
                   {rivalStat}
+                  <div>{rivalScore}</div>
                 </div>
                 <div className="rival-matchup-team">
                   <div className="rival-matchup-name">
@@ -74,6 +81,7 @@ const Rivals: React.FC<IProps> = (props: IProps) => {
                     <h4>{props.teams[myKey].name}</h4>
                   </div>
                   {myStat}
+                  <h3>{myScore}</h3>
                 </div>
               </div>
             )

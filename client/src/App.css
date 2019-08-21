@@ -2,9 +2,9 @@
   text-align: center;
 }
 
-* {
+/* * {
   border: 0.1px solid black;
-}
+} */
 /* ====== header ============== */
 header {
   height: 150px;
@@ -110,7 +110,7 @@ aside Link {
 
 .rival-matchup-team, .rival-matchup-header {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+  grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
 }
 
 .rival-matchup-team div, .rival-matchup-header div {
