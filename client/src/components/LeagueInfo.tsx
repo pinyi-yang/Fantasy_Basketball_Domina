@@ -8,7 +8,9 @@ interface IProps {
   scoreboard: IMatchup[],
   standings: ITeam[],
   rivals: ITeam[],
+  week: string,
   setRivals: React.Dispatch<React.SetStateAction<ITeam[]>>
+  setWeek: React.Dispatch<React.SetStateAction<string>>
 }
 
 const LeagueInfo: React.FC<IProps> = (props: IProps) => {
@@ -18,6 +20,10 @@ const LeagueInfo: React.FC<IProps> = (props: IProps) => {
   let rivalsKeys = props.rivals.map(rival => (
     rival.key
   ))
+  let weekSelector = [];
+  for (let i = 1; i<=23; i++) {
+    weekSelector.push(<option value={i}>Week {i}</option>)
+  }
 
   const handleRivalChange = (owner_yahooId: string, name: string, key: string, logo: string): void => {
     if (rivalsKeys.includes(key)) {
@@ -89,6 +95,9 @@ const LeagueInfo: React.FC<IProps> = (props: IProps) => {
     <div className='league-info'>
       <div className='league-info-sub'>
         <div className="team-info">
+          <select value={props.week} onChange={(e) => props.setWeek(e.target.value)}>
+            {weekSelector}
+          </select>
           {teamInfo}
         </div>
 

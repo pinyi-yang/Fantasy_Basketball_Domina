@@ -205,7 +205,9 @@ const Home: React.FC<IProps> = (props: IProps) => {
                         scoreboard={scoreboard}
                         standings={standings}
                         rivals={rivals}
-                        setRivals = {setRivals} 
+                        setRivals = {setRivals}
+                        week={week}
+                        setWeek={setWeek} 
                         />
           )} />
           <Route exact path='/matchup' render={() => (
