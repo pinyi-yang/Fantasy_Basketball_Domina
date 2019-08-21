@@ -9,7 +9,7 @@ import axios from 'axios';
 router.get('/userdetails', (req, res) => {
   console.log('get rivals for user: ', req.user.yahooId);
   // ! change back to req.user.yahooId after testing==================================
-  User.findOne({yahooId: "Y32MRXENEC6MGGUZOPKTKMJ7SY"}).populate('watchPlayers').exec((err, user) => {
+  User.findOne({yahooId: req.user.yahooId}).populate('rivalries watchPlayers').exec((err, user) => {
     console.log('find user in db:', user);
     if(err) res.json(err);
     let {rivalries, watchPlayers} = user.toObject()

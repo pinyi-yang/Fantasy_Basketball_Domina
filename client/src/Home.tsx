@@ -75,6 +75,12 @@ const Home: React.FC<IProps> = (props: IProps) => {
       // setRivals(response.data.data.createUser.rivalries);
       // setWatchPlayers(response.data.data.createUser.watchPlayers);
     }).catch(err => {console.log('error: checking database: ', err);})
+
+    axios.get('/api/userdetails').then(response => {
+      console.log('get user details back: ', response.data);
+      setRivals(response.data.rivalries);
+      setWatchPlayers(response.data.watchPlayers);
+    })
   }, [])
 
   useEffect(() => {
