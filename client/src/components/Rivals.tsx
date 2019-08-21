@@ -64,9 +64,6 @@ const Rivals: React.FC<IProps> = (props: IProps) => {
 
             rivalsMatchups.push(
               <div className="rival-matchup">
-                <div className="rival-matchup-title">
-                  <h4>VS {props.teams[key].name}</h4>
-                </div>
                 <div className="rival-matchup-team">
                   <div className="rival-matchup-name">
                     <img src={props.teams[key].logo} alt="" className="small-logo"/>
@@ -81,7 +78,7 @@ const Rivals: React.FC<IProps> = (props: IProps) => {
                     <h4>{props.teams[myKey].name}</h4>
                   </div>
                   {myStat}
-                  <h3>{myScore}</h3>
+                  <div>{myScore}</div>
                 </div>
               </div>
             )

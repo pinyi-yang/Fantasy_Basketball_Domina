@@ -1,10 +1,31 @@
 .App {
   text-align: center;
+  background: beige;
 }
 
-/* * {
-  border: 0.1px solid black;
-} */
+.content {
+  background: palegoldenrod;
+  padding: 1em;
+  border-radius: 10px;
+}
+
+aside {
+  background: palegoldenrod;
+  border-radius: 10px;
+}
+
+header {
+  background: lightgoldenrodyellow;
+}
+
+img {
+  border-radius: 6px;
+}
+
+* {
+  /* border: 0.1px solid black; */
+  box-sizing: border-box;
+}
 /* ====== header ============== */
 header {
   height: 150px;
@@ -26,8 +47,8 @@ header {
   margin-top: 10px;
 }
 /* =============aside ============ */
-aside Link {
-  color: black;
+aside a {
+  color: white;
   text-decoration: none;
   font-size: 1.4em;
 }
@@ -38,19 +59,25 @@ aside Link {
 }
 
 .side-link-div {
-  border-radius: 5px;
+  border-radius: 10px;
   height: 70px;
-  background: rgb(184, 184, 184);
+  background: rebeccapurple;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5px;
+}
+
+.side-link-div h3 {
+  color: white;
+  text-decoration: none;
 }
 
 .side-league {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5px;
+  margin: 6px 0;
 }
 
 /* =============== content ============ */
@@ -98,6 +125,10 @@ aside Link {
 }
 
 /* ====================== rivals ============== */
+.rival-matchup {
+  border: 2px solid gray;
+}
+
 .rival-matchup-title {
   text-align: left;
 }
@@ -111,6 +142,10 @@ aside Link {
 .rival-matchup-team, .rival-matchup-header {
   display: grid;
   grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
+}
+
+.rival-matchup-header {
+  border: 2px solid gray;
 }
 
 .rival-matchup-team div, .rival-matchup-header div {
