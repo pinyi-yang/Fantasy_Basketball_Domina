@@ -13,7 +13,7 @@ import Matchup from './components/Matchup';
 import Rivals from './components/Rivals';
 import Playground from './components/Playground';
 
-import {ILeague, IMatchup, ITeam, IPlayer} from './interfaces';
+import {ILeague, IMatchup, ITeam, IPlayer, ITeamScore} from './interfaces';
 
 interface IProps {
   user: IUser
@@ -29,19 +29,20 @@ const Home: React.FC<IProps> = (props: IProps) => {
   const [myTeam, setMyTeam] = useState<ITeam>({} as ITeam);
   const [rivals, setRivals] = useState<ITeam[]>([] as ITeam[]);
   const [watchPlayers, setWatchPlayers] = useState<IPlayer[]>([] as IPlayer[]);
-  const statName = {
-    5: "FG%",
-    8: "FT%",
-    10: "3PTM",
-    12: "PTS",
-    15: "REB",
-    16: "AST",
-    17: "ST",
-    18: "BLK",
-    19: "TO",
-    9004003: "FGM/A",
-    9007006: "FTM/A"
-  }
+  const [teams, setTeams] = useState<{[key:string]: ITeamScore}>({} as {[key:string]: ITeamScore});
+  // const statName = {
+  //   5: "FG%",
+  //   8: "FT%",
+  //   10: "3PTM",
+  //   12: "PTS",
+  //   15: "REB",
+  //   16: "AST",
+  //   17: "ST",
+  //   18: "BLK",
+  //   19: "TO",
+  //   9004003: "FGM/A",
+  //   9007006: "FTM/A"
+  // }
   useEffect(() => {
     //* get or create user in DB, passed
     let userInput = {
@@ -135,7 +136,13 @@ const Home: React.FC<IProps> = (props: IProps) => {
 
       axios.get(`/api/leagues/${leagues[leagueIndex].key}/scoreboard?week=${week}`).then(response => {
         console.log('get scoreboard back: ', response.data);
-        setScoreboard(response.data)
+        setScoreboard(response.data);
+        let results: {[key:string]: ITeamScore} = {}
+        response.data.forEach( (matchup: {teams: ITeamScore[]}) => {
+          results[matchup.teams[0].key] = matchup.teams[0];
+          results[matchup.teams[1].key] = matchup.teams[1];
+        })
+        setTeams(results);
       })
       // let body = {
       //   query: `query leagueInfo($token: String, $leagueKey: String, $week: String) {
