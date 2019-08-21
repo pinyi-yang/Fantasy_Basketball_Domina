@@ -25,13 +25,15 @@ const createUser = async ({userInput}: {userInput: IUser}) => {
         name: userInput.name,
         avatar: userInput.avatar
       }, (err, user) => {
-        console.log('created user from database', user.toObject());
-        return user.toObject();
+        let result = user.toObject();
+        console.log('created user from database', result);
+        return result;
       })
     } else {
       //find user in database, return it;
-      console.log('find user: ', user.toObject(), 'in database and return it');
-      return user.toObject();
+    let result = user.toObject()
+    console.log('find user: ====================================== ', result, 'in database and return it');
+    return result;
     }
   })
 }

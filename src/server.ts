@@ -46,6 +46,7 @@ app.use('/api', apiRouter);
 
 import schema from './graphql/schema';
 import root from './graphql/resolvers';
+import User from './models/user';
 // var schema = buildSchema(`
 //   type Query {
 //     hello: String
@@ -55,6 +56,14 @@ import root from './graphql/resolvers';
 // var root = {
 //   hello: () => ('Hello World!')
 // }
+
+app.get('/user', (req, res) => {
+  User.findOne({
+    yahooId: req.user.yahooId
+  }).populate('rivalries').populate('watchPlayers').exec((err, user)=> {
+    res.json(user.toObject());
+  })
+})
 
 app.get('/setting', (req, res) => {
   let config = {

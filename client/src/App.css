@@ -68,6 +68,8 @@ aside Link {
 
 .league-info-sub {
   padding: 10px;
+  border-radius: 15px;
+  border: 3px solid grey;
 }
 
 .small-logo {

@@ -10,10 +10,10 @@ export interface IUser {
 
 export interface ITeam {
   _id?: string;
-  owner_yahooId?: string;
+  owner_yahooId: string;
   key: string;
-  name?: string;
-  logo?: string;
+  name: string;
+  logo: string;
   rank?: number;
   wins?: string;
   losses?: string;

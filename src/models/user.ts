@@ -1,6 +1,6 @@
 import mongoose, {Schema} from 'mongoose';
-import Player from './player';
-import Team from './team';
+import Player, {DBIPlayer} from './player';
+import Team, {DBITeam} from './team';
 
 const userSchema = new Schema({
   yahooId: {
@@ -13,6 +13,14 @@ const userSchema = new Schema({
   watchPlayers: [{type: Schema.Types.ObjectId, ref: 'Player'}]
 })
 
+export interface DBIUser extends mongoose.Document {
+  yahooId: string,
+  name: string,
+  avatar: string,
+  rivalries: DBITeam[],
+  watchPlayers: DBIPlayer[],
+}
+
 userSchema.set('toObject', {
   transform: function(doc, ret, options) {
     let returnJson = {
@@ -20,8 +28,8 @@ userSchema.set('toObject', {
       yahooId: ret.yahooId,
       name: ret.name,
       avatar: ret.avatar,
-      rivalries: ret.rivalries || [],
-      watchPlayers: ret.watchPlayers || []
+      rivalries: ret.rivalries,
+      watchPlayers: ret.watchPlayers
     }
     return returnJson;
   }

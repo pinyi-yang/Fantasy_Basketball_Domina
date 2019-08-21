@@ -1,19 +1,38 @@
 import React from 'react';
 import {RouteComponentProps} from 'react-router-dom';
 import {ILeague, ITeam, IMatchup} from '../interfaces';
+import axios from 'axios';
 
 interface IProps {
   myTeam: ITeam,
   scoreboard: IMatchup[],
-  standings: ITeam[]
+  standings: ITeam[],
+  rivals: ITeam[],
+  setRivals: React.Dispatch<React.SetStateAction<ITeam[]>>
 }
 
 const LeagueInfo: React.FC<IProps> = (props: IProps) => {
-
   let teamInfo = <p>Loading Team info</p>
   let scoreboard: JSX.Element | JSX.Element[] = <p>Loading Scoreboard</p>
   let standings: JSX.Element | JSX.Element[] = <p>Loading Standing</p>
+  let rivalsKeys = props.rivals.map(rival => (
+    rival.key
+  ))
 
+  const handleRivalChange = (owner_yahooId: string, name: string, key: string, logo: string): void => {
+    if (rivalsKeys.includes(key)) {
+      // remove team from user rivalries
+      axios.delete(`/api/rivals/${key}`).then(response => {
+        console.log('removed rival, and new rivals are: ', response.data);
+      })
+    } else {
+      // add team to user rivalries
+      console.log('add team to user rivals with', owner_yahooId, name, key, logo);
+      axios.post(`/api/rivals`, {owner_yahooId, name, key, logo}).then(response => {
+        console.log('get rivals back: ', response.data);
+      })
+    }
+  }
   if (Object.keys(props.myTeam).length) {
     teamInfo = <>
       <img src={props.myTeam.logo} alt="" className="small-logo"/>
@@ -27,7 +46,9 @@ const LeagueInfo: React.FC<IProps> = (props: IProps) => {
         <div className="list-single-item" key={index}>
           <div className="list-single-item-1">
             <img src={matchup.teams[0].logo} alt="" className="small-logo"/>
-            
+            <button onClick={() => handleRivalChange(matchup.teams[0].owner_yahooId, matchup.teams[0].name, matchup.teams[0].key, matchup.teams[0].logo)}>
+              {rivalsKeys.includes(matchup.teams[0].key)? '⚔️':'⚪️'}
+            </button>
             <h4>{matchup.teams[0].name}</h4>
           </div>
           <h4>{matchup.teams[0].score}</h4>
@@ -35,6 +56,9 @@ const LeagueInfo: React.FC<IProps> = (props: IProps) => {
         <div className="list-single-item" key={index}>
           <div className="list-single-item-1">
             <img src={matchup.teams[1].logo} alt="" className="small-logo"/>
+            <button onClick={() => handleRivalChange(matchup.teams[1].owner_yahooId, matchup.teams[1].name, matchup.teams[1].key, matchup.teams[1].logo)}>
+              {rivalsKeys.includes(matchup.teams[1].key)? '⚔️':'⚪️'}
+            </button>
             <h4>{matchup.teams[1].name}</h4>
           </div>
           <h4>{matchup.teams[1].score}</h4>
@@ -48,6 +72,9 @@ const LeagueInfo: React.FC<IProps> = (props: IProps) => {
       <div className="list-single-item" key={team.key}>
         <div className="list-single-item-1">
           <img src={team.logo} alt="" className="small-logo"/>
+          <button onClick={() => handleRivalChange(team.owner_yahooId, team.name, team.key, team.logo)}>
+              {rivalsKeys.includes(team.key)? '⚔️':'⚪️'}
+          </button>
           <h4>{team.name}</h4>
           <h4>{team.wins}-{team.ties}-{team.losses}</h4>
         </div>

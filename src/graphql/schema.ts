@@ -16,7 +16,7 @@ export default buildSchema(`
 
   type Team {
     _id: String
-    owner_yahooId: String
+    owner_yahooId: String!
     key: String!
     name: String
     logo: String

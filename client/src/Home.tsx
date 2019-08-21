@@ -13,7 +13,7 @@ import Matchup from './components/Matchup';
 import Rivals from './components/Rivals';
 import Playground from './components/Playground';
 
-import {ILeague, IMatchup, ITeam} from './interfaces';
+import {ILeague, IMatchup, ITeam, IPlayer} from './interfaces';
 
 interface IProps {
   user: IUser
@@ -26,7 +26,9 @@ const Home: React.FC<IProps> = (props: IProps) => {
   const [week, setWeek] = useState('');
   const [scoreboard, setScoreboard] = useState<IMatchup[]>([] as IMatchup[]);
   const [standings, setStandings] = useState<ITeam[]>([] as ITeam[]);
-  const [myTeam, setMyTeam] =useState<ITeam>({} as ITeam)
+  const [myTeam, setMyTeam] = useState<ITeam>({} as ITeam);
+  const [rivals, setRivals] = useState<ITeam[]>([] as ITeam[]);
+  const [watchPlayers, setWatchPlayers] = useState<IPlayer[]>([] as IPlayer[]);
   const statName = {
     5: "FG%",
     8: "FT%",
@@ -55,18 +57,6 @@ const Home: React.FC<IProps> = (props: IProps) => {
           name
           yahooId
           avatar
-          rivalries{
-            key
-            name
-            logo
-          }
-          watchPlayers {
-            key
-            firstName
-            lastName
-            positions
-            headshot
-          }
         }
       }`,
       variables: {
@@ -81,7 +71,9 @@ const Home: React.FC<IProps> = (props: IProps) => {
 
     console.log('ready to create user from graphql');
     axios.post('/graphql', body, options).then(response => {
-      console.log('checking user with db, return', response.data.data);
+      console.log('checking user with db, return', response.data.data.createUser);
+      // setRivals(response.data.data.createUser.rivalries);
+      // setWatchPlayers(response.data.data.createUser.watchPlayers);
     }).catch(err => {console.log('error: checking database: ', err);})
   }, [])
 
@@ -129,6 +121,8 @@ const Home: React.FC<IProps> = (props: IProps) => {
             scoreboard {
               teams {
                 name
+                owner_yahooId
+                key
                 logo
                 score
               }
@@ -187,6 +181,8 @@ const Home: React.FC<IProps> = (props: IProps) => {
             <LeagueInfo myTeam={myTeam} 
                         scoreboard={scoreboard}
                         standings={standings}
+                        rivals={rivals}
+                        setRivals = {setRivals} 
                         />
           )} />
           <Route exact path='/matchup' render={() => (

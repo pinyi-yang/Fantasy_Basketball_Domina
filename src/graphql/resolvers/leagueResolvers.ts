@@ -86,12 +86,14 @@ const getScoreBoard = (token: string, week: string, leagueKey: string): Promise<
       if (key !== 'count') {
         let team0 = {
           key: matchups[key].matchup[0].teams[0].team[0][0].team_key,
+          owner_yahooId: matchups[key].matchup[0].teams[0].team[0][19].managers[0].manager.guid,
           name: matchups[key].matchup[0].teams[0].team[0][2].name,
           logo: matchups[key].matchup[0].teams[0].team[0][5].team_logos[0].team_logo.url,
           score: 0
         }
         let team1 = {
           key: matchups[key].matchup[0].teams[1].team[0][0].team_key,
+          owner_yahooId: matchups[key].matchup[0].teams[1].team[0][19].managers[0].manager.guid,
           name: matchups[key].matchup[0].teams[1].team[0][2].name,
           logo: matchups[key].matchup[0].teams[1].team[0][5].team_logos[0].team_logo.url,
           score: 0
