@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background: beige;
+  background: url('/img/login_background.jpg');
   min-height: 100vh;
 }
 
@@ -13,15 +13,6 @@
   background: palegoldenrod;
   padding: 1em;
   border-radius: 10px;
-}
-
-aside {
-  background: palegoldenrod;
-  border-radius: 10px;
-}
-
-header {
-  background: lightgoldenrodyellow;
 }
 
 img {
@@ -73,6 +64,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(250, 250, 210, 0.75);
 }
 
 #header-logo {
@@ -88,11 +80,17 @@ header {
   margin-top: 10px;
 }
 /* =============aside ============ */
+aside {
+  background: rgba(238, 232, 170, 0.9);
+  border-radius: 10px;
+  padding: 1em 0.2em;
+}
+
 aside a {
   color: white;
   text-decoration: none;
   font-size: 1.4em;
-  padding: 1em;
+  padding: 1em 0;
 }
 
 .side-league-logo {
@@ -101,7 +99,8 @@ aside a {
 }
 
 .side-link-div {
-  border-radius: 10px;
+  border-radius: 5px;
+  border: 4px solid darkgrey;
   height: 70px;
   background: rebeccapurple;
   display: flex;
@@ -124,7 +123,7 @@ aside a {
 
 /* =============== content ============ */
 .content {
-  background: beige;
+  background: rgba(245, 245, 220, 0.9);
   height: 100%;
 }
 
@@ -160,10 +159,15 @@ aside a {
   border:0.5px solid lightgray;
 }
 
-.list-single-item-1 {
-  display: flex;
+.list-single-item-1, .list-single-item-2 {
+  display: grid;
+  grid-template-columns: 50px 30px 1fr;
   align-items: center;
   justify-content: space-around;
+}
+
+.list-single-item-2 {
+  grid-template-columns: 50px 30px 1fr 1fr;
 }
 
 /* ====================== rivals ============== */
@@ -175,11 +179,6 @@ aside a {
   text-align: left;
 }
 
-.rival-matchup-name {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
 
 .rival-matchup-team, .rival-matchup-header {
   display: grid;
@@ -188,11 +187,23 @@ aside a {
 
 .rival-matchup-header {
   border: 2px solid gray;
+  font-weight: bold;
 }
 
-.rival-matchup-team div, .rival-matchup-header div {
+.rival-matchup-stat, .rival-matchup-header div {
   border: 0.5px solid;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
+
+.rival-matchup-name {
+  border: 0.5px solid;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 1em;
+}
+
+ 

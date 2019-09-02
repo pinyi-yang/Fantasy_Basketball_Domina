@@ -78,7 +78,7 @@ const LeagueInfo: React.FC<IProps> = (props: IProps) => {
   if (props.standings.length) {
     standings = props.standings.map(team => (
       <div className="list-single-item" key={team.key}>
-        <div className="list-single-item-1">
+        <div className="list-single-item-2">
           <img src={team.logo} alt="" className="small-logo"/>
           <button onClick={() => handleRivalChange(team.owner_yahooId, team.name, team.key, team.logo)}>
               {rivalsKeys.includes(team.key)? '⚔️':'⚪️'}
@@ -114,7 +114,9 @@ const LeagueInfo: React.FC<IProps> = (props: IProps) => {
       <div className='league-info-sub'>
         <div className="standings">
           <div className="list-single-item">
-          <div className="list-single-item-1">
+          <div className="list-single-item-2">
+            <h4></h4>
+            <h4></h4>
             <h4>Team</h4>
             <h4>Wins-Ties-Losses</h4>
           </div>

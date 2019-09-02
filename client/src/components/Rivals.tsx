@@ -34,7 +34,7 @@ const Rivals: React.FC<IProps> = (props: IProps) => {
       let myStat: JSX.Element[] = [];
       for (let key in props.teams[myKey].stat) {
         myStat.push(
-          <div>
+          <div className="rival-matchup-stat">
             {props.teams[myKey].stat[key]}
           </div>
         )
@@ -47,7 +47,7 @@ const Rivals: React.FC<IProps> = (props: IProps) => {
             let rivalScore = 0;
             for (let item in props.teams[key].stat) {
               rivalStat.push(
-                <div>
+                <div className="rival-matchup-stat">
                   {props.teams[key].stat[item]}
                 </div>
               )
@@ -68,7 +68,7 @@ const Rivals: React.FC<IProps> = (props: IProps) => {
                   <div className="rival-matchup-name">
                     <img src={props.teams[key].logo} alt="" className="small-logo"/>
                     <h4>{props.teams[key].name}</h4>
-                  </div>
+                  </div >
                   {rivalStat}
                   <div>{rivalScore}</div>
                 </div>
@@ -78,7 +78,7 @@ const Rivals: React.FC<IProps> = (props: IProps) => {
                     <h4>{props.teams[myKey].name}</h4>
                   </div>
                   {myStat}
-                  <div>{myScore}</div>
+                  <div className="rival-matchup-stat">{myScore}</div>
                 </div>
               </div>
             )
