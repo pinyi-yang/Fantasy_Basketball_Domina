@@ -204,9 +204,13 @@ const Home: React.FC<IProps> = (props: IProps) => {
   ))
   let hasMatchup = Object.keys(teams).includes(myTeam.key);
   let myMatchup: IMatchup | null = null;
-  // scoreboard.forEach(matchup => {
-  
-  // })
+  if (hasMatchup) {
+    scoreboard.forEach(matchup => {
+      if (matchup.teams[0].key === myTeam.key || matchup.teams[1].key === myTeam.key ) {
+        myMatchup = matchup;
+      }
+    })
+  }
   return (
     <Router>
       <Header league={currentLeague}/>
@@ -229,7 +233,7 @@ const Home: React.FC<IProps> = (props: IProps) => {
                         />
           )} />
           <Route exact path='/matchup' render={() => (
-            <Matchup />
+            <Matchup myMatchup = {myMatchup} />
           )} />
           <Route exact path='/rivals' render={() => (
             <Rivals myTeam={myTeam}

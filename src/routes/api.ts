@@ -77,7 +77,7 @@ router.delete('/rivals/:key', (req, res) => {
 })
 
 // POST /api/players - create a new player
-router.get('/players', (req, res) => {
+router.post('/players', (req, res) => {
   Player.create({
     key: "testKey",
     firstName: "test",
