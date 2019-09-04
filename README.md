@@ -20,11 +20,11 @@ Fantasy basketball Domina is a helper tool for yahoo fantasy gamers. It automati
 
 | Login with Yahoo! | View All Leagues at any Week |
 |:---:|:---:|
-|![Login](./ReadmeFiles/Login.gif) | ![League](./ReadmeFiles/leagues.gif) |
+|![Login](./readmeFiles/Login.gif) | ![League](./readmeFiles/leagues.gif) |
 
 | Rivals | 
-|:---:|:---:|
-|![Rival](./ReadmeFiles/rivals.gif) | 
+|:---:|
+|![Rival](./readmeFiles/rivals.gif) | 
 
 ## Design
 
