@@ -70,7 +70,7 @@ const Rivals: React.FC<IProps> = (props: IProps) => {
                     <h4>{props.teams[key].name}</h4>
                   </div >
                   {rivalStat}
-                  <div>{rivalScore}</div>
+                  <div className="rival-matchup-stat">{rivalScore}</div>
                 </div>
                 <div className="rival-matchup-team">
                   <div className="rival-matchup-name">
