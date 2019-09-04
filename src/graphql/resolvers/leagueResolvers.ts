@@ -9,7 +9,7 @@ const getLeagues = ({token}: {token: string}): Promise<ILeague[] | void> => {
   }
   return axios.get('https://fantasysports.yahooapis.com/fantasy/v2/users;use_login=1/games;game_code=nba/leagues?format=json', config).then(response => {
     let games = response.data.fantasy_content.users[0].user[1].games
-    let leagues1 = games[Object.keys(games).length-2].game[1].leagues;
+    let leagues1 = games[Object.keys(games).length - 2].game[1].leagues;
     let leagues2 = games[Object.keys(games).length - 3].game[1].leagues;
     let results = [];
     for (let key in leagues1) {
