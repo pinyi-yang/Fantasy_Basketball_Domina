@@ -16,7 +16,7 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 
 // The mongoose connection string needs to be typed as string
-mongoose.connect(process.env.MONGOOB_URI, { useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 const db = mongoose.connection;
 // COnnection types don't seem to support db.host and db.port
 db.once('open', () => {
