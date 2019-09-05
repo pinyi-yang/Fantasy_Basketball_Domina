@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nodemon build/server.js",
     "start": "node build/server.js",
-    "build": "npm typescript && tsc && cp -r views build/views",
+    "build": "npm install typescript && tsc && cp -r views build/views",
     "postinstall": "npm run build",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
