@@ -5,8 +5,9 @@
   "main": "build/server.js",
   "scripts": {
     "test": "nodemon build/server.js",
-    "prestart": "tsc && cp -r views build/views && cd client && npm run build",
     "start": "node build/server.js",
+    "build": "tsc && cp -r views build/views",
+    "postinstall": "npm run build",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "author": "",
@@ -24,7 +25,8 @@
     "graphql": "^14.4.2",
     "mongoose": "^5.6.9",
     "passport": "^0.4.0",
-    "passport-github2": "^0.1.11"
+    "passport-github2": "^0.1.11",
+    "typescript": "^3.6.2"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
