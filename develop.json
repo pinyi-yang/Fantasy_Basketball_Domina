@@ -5,9 +5,8 @@
   "main": "build/server.js",
   "scripts": {
     "test": "nodemon build/server.js",
+    "prestart": "tsc && cp -r views build/views && cd client && npm run build",
     "start": "node build/server.js",
-    "build": "tsc && cp -r views build/views",
-    "postinstall": "npm run build",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "author": "",
