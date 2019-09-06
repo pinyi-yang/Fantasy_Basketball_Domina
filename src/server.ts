@@ -192,8 +192,8 @@ app.use('/graphql', graphqlHTTP({
 }))
 
 app.get('*', (req, res) => {
-  res.redirect('/');
-  // res.sendFile(__dirname + '/../client/build/index.html');
+  // res.redirect('/');
+  res.sendFile(__dirname + '/../client/build/index.html');
 })
 
 //* proxy won't work with OAuth. We will run react and express at 3000.
