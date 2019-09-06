@@ -52,7 +52,7 @@ const App: React.FC = () => {
     message.then(response => {
       setUser(response);
     }).catch(err => {
-      console.log(err);
+      console.log('err login with Yahoo:', err);
     })
   }
 

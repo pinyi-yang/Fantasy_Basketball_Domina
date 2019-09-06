@@ -24,6 +24,7 @@ function opeNewAuthWindow(myUrl: string): Promise<IUser> {
           resolve(JSON.parse(msg.data.payload))
         }
         catch(err) {
+          console.log('err in auth: ', err);
           resolve(msg.data.payload)
         }
         finally {
