@@ -1,5 +1,4 @@
 # Fantasy Basketball Domina (FBD)
-**[Live App](https://fantasy-basketball-domina.herokuapp.com)**
 
 Fantasy basketball Domina is a helper tool for yahoo fantasy gamers. It automatically synchronizes status of all your yahoo fantasy leagues and teams. Moreover, it also provides extra features include (rivals, result prediction and transaction recommendation) 
 
